@@ -14,7 +14,7 @@ a,a:hover{
 }
 
 .background {
-    background-image: url('./image/golchottor.jpg');
+    background-image: url('../image/golchottor.jpg');
     background-repeat: repeat;
     background-attachment: fixed;
     background-position: top;
