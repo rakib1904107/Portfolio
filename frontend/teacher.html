@@ -173,7 +173,7 @@
       function handleDelete(clickedLink) {
         console.log(clickedLink.id);
         const id = clickedLink.id;
-        fetch('http://localhost:3000/api/v1/teachers/delete/'+id, {
+        fetch('https://cuet-teachers-portfolio-zvxe.onrender.com/api/v1/teachers/delete/'+id, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json", // Replace with the appropriate content type if needed
@@ -189,7 +189,7 @@
           .then((data) => {
             // Process the response data if needed
             console.log("Delete operation successful:", data);
-            window.location.href="index.html";
+            window.location.href="../index.html";
           })
           .catch((error) => {
             console.error("Error during DELETE request:", error);
@@ -197,7 +197,7 @@
       }
 
       function handlelog(clickedLink) {
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
       }
     </script>
 
