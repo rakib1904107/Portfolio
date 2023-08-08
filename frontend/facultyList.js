@@ -29,7 +29,7 @@ fetch("https://cuet-teachers-portfolio-zvxe.onrender.com/api/v1/depts/" + deptNa
       elementImage.classList.add("image");
 
       var newImage = document.createElement('img');
-      newImage.src=`./image/${teacherInfo.img}`;
+      newImage.src=`../image/${teacherInfo.img}`;
       console.log(teacherInfo.img);
       elementImage.appendChild(newImage);
 
