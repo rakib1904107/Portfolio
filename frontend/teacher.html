@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher</title>
+    <link rel="stylesheet" href="/frontend/teacher.css" />
+    <link rel="stylesheet" href="/frontend/navbar.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  </head>
+  <body>
+    <div id="nav-placeholder"></div>
+    <script>
+      $(function () {
+        $("#nav-placeholder").load("/frontend/navbar.html");
+      });
+    </script>
+
+    <script>
+      
+      var obj = JSON.parse(localStorage.getItem("obj"));
+      const id = obj.tech_by_mail._id;
+      var logStatus = obj.islogged;
+      console.log(obj.islogged);
+      fetch("http://127.0.0.1:3000/api/v1/teachers/" + id)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          console.log(data);
+          console.log(data.name);
+
+          var mainDiv = document.querySelector(".details");
+          var teacherName = document.createElement("h1");
+          teacherName.appendChild(document.createTextNode(data.name));
+          mainDiv.appendChild(teacherName);
+          mainDiv.appendChild(document.createElement("br"));
+
+          var postName = document.createElement("h3");
+          postName.appendChild(document.createTextNode(data.post));
+          mainDiv.appendChild(postName);
+          mainDiv.appendChild(document.createElement("br"));
+
+          var img=document.createElement("img");
+          img.src=`./image/${data.img}`;
+          document.querySelector('.profile_img').appendChild(img);
+
+          var emailAdd = document.createElement("p");
+          emailAdd.innerHTML = `<b>Email Address : </b>${data.mail}`;
+          // emailAdd.appendChild(
+          //   document.createTextNode("E-mail Address: " + data.mail)
+          // );
+          mainDiv.appendChild(emailAdd);
+          mainDiv.appendChild(document.createElement("br"));
+
+          var phNo = document.createElement("p");
+          phNo.innerHTML = `<b>Mobile : </b>${data.phno}`;
+          // phNo.appendChild(document.createTextNode("Mobile: " + data.phno));
+          mainDiv.appendChild(phNo);
+          mainDiv.appendChild(document.createElement("br"));
+
+          var aboutMy = document.createElement("p");
+          aboutMy.innerHTML = `<b>About Myself : </b>${data.bio}`;
+          // aboutMy.appendChild(
+          //   document.createTextNode("About Myself: " + data.bio)
+          // );
+          mainDiv.appendChild(aboutMy);
+          mainDiv.appendChild(document.createElement("br"));
+
+          var fieldInterest = document.createElement("p");
+          fieldInterest.innerHTML = `<b>Field of Interest : </b>${data.interestfield}`;
+          // fieldInterest.appendChild(
+          //   document.createTextNode("Field of Interest: " + data.interestfield)
+          // );
+          mainDiv.appendChild(fieldInterest);
+          mainDiv.appendChild(document.createElement("br"));
+
+          var Qualification = document.createElement("p");
+          Qualification.innerHTML = `<b>Qualifications : </b>${data.qualification}`;
+          // Qualification.appendChild(
+          //   document.createTextNode("Qualifications: " + data.qualification)
+          // );
+          mainDiv.appendChild(Qualification);
+          mainDiv.appendChild(document.createElement("br"));
+
+          if (logStatus === true) {
+            var flexButton = document.createElement("div");
+            flexButton.classList.add("flexButton");
+            var UpdateButton = document.createElement("button");
+            UpdateButton.setAttribute("class", "update-info");
+            UpdateButton.setAttribute("type", "button");
+            UpdateButton.setAttribute("id", data.mail);
+            UpdateButton.setAttribute("onclick", "handleUpdate(this)");
+            UpdateButton.textContent = "Update Details";
+            flexButton.appendChild(UpdateButton);
+            document.querySelector(".add-btn").appendChild(flexButton);
+
+            var SignUP = document.querySelector(".signUp");
+            SignUP.innerHTML = "Delete";
+            SignUP.setAttribute("id", data._id);
+            SignUP.setAttribute("href", "#");
+            SignUP.setAttribute("onclick", "handleDelete(this)");
+
+            var logOut = document.querySelector(".logIn");
+            logOut.innerHTML = "Log Out";
+            logOut.setAttribute("href", "#");
+            logOut.setAttribute("onclick", "handlelog(this)");
+          }
+
+          var table = document.getElementById("pub-table");
+          const countpub = data.publication;
+          console.log(countpub.length);
+          for (var i = 0; i < countpub.length; i++) {
+            var pubObj = countpub[i];
+            var row = table.insertRow();
+            var columnCount = table.rows[0].cells.length;
+            console.log(columnCount);
+            console.log(pubObj.title);
+            for (var j = 0; j < columnCount; j++) {
+              var cell = row.insertCell();
+              if (j == 0) cell.innerHTML = i+1;
+              else if(j==1) cell.innerHTML = pubObj.title;
+              else if(j==2) cell.innerHTML = pubObj.authors;
+              else if(j==3) cell.innerHTML = pubObj.information;
+              else cell.innerHTML = pubObj.year;
+            }
+
+            
+          }
+
+          var publicationAdd = document.querySelector(".publication");
+          if (logStatus === true) {
+            var flexButton = document.createElement("div");
+            flexButton.classList.add("flexButton");
+            var AddButton = document.createElement("button");
+            AddButton.setAttribute("class", "add-pub");
+            AddButton.setAttribute("type", "button");
+            AddButton.setAttribute("id", data.mail);
+            AddButton.setAttribute("onclick", "handleAddPub(this)");
+            AddButton.textContent = "Add Publication";
+            flexButton.appendChild(AddButton);
+            publicationAdd.appendChild(flexButton);
+          }
+        })
+        .catch((error) => console.log(error));
+
+      function handleUpdate(clickedLink) {
+        console.log(clickedLink.id);
+        var obj = {
+          mail: clickedLink.id,
+          teacherId: id,
+        };
+        console.log(obj);
+        localStorage.setItem("obj", JSON.stringify(obj));
+        window.location.href = "/frontend/updateInfo.html";
+      }
+      function handleAddPub(clickedLink) {
+        console.log(clickedLink.id);
+        var obj = {
+          mail: clickedLink.id,
+          teacherId:id
+        };
+        console.log(obj);
+        localStorage.setItem("obj", JSON.stringify(obj));
+        window.location.href = "/frontend/addPublication.html";
+
+      }
+
+      function handleDelete(clickedLink) {
+        console.log(clickedLink.id);
+        const id = clickedLink.id;
+        fetch('http://localhost:3000/api/v1/teachers/delete/'+id, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json", // Replace with the appropriate content type if needed
+            // Add any additional headers if required, e.g., authorization token, etc.
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Process the response data if needed
+            console.log("Delete operation successful:", data);
+            window.location.href="index.html";
+          })
+          .catch((error) => {
+            console.error("Error during DELETE request:", error);
+          });
+      }
+
+      function handlelog(clickedLink) {
+        window.location.href = "index.html";
+      }
+    </script>
+
+    <div class="portfolio">
+      <div class="profile_img">
+        
+      </div>
+      <div class="details">
+        <!-- <h3>Teacher name</h3>
+            <h6>Position</h6>
+            <p>Email</p>
+            <p>Phone Number</p>
+            <p>About</p>
+            <p>Field of Interest</p>
+            <p>Qualification</p>
+            <p>Publication</p> -->
+      </div>
+      <div class="add-btn"></div>
+      <div class="publication">
+        <h2>Publications</h2>
+        <div>
+          <table id="pub-table">
+            <thead>
+              <tr>
+                <th>SERIAL NO</th>
+                <th>TITLE</th>
+                <th>AUTHORS</th>
+                <th>INFORMATIONS</th>
+                <th>YEAR</th>
+                <!-- Add more columns as needed -->
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Rows will be added dynamically here -->
+            </tbody>
+          </table>
+        </div>
+              
+      </div>
+    </div>
+
+    <!-- <script>
+        fetch('http://127.0.0.1:3000/api/v1/depts')
+            .then(res =>{
+                return res.json();
+            })
+            .then(data => {
+                data.forEach(teacher => {
+                    /////
+                });
+            })
+            .catch(error => console.log(error));
+    </script> -->
+  </body>
+</html>

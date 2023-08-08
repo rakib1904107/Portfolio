@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/frontend/login.css">
+    <link rel="stylesheet" href="/frontend/navbar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</head>
+<body>
+    <div id="nav-placeholder">
+
+    </div>
+    <script>
+    $(function(){
+      $("#nav-placeholder").load("/frontend/navbar.html");
+    });
+    </script>
+    
+    <form class="form-box">
+        <div class="form-data">
+            <h3>Login</h3>
+            Usermail: <br>
+            <input type="text" name="mail" placeholder="example@cuet.ac.bd"><br>
+            Password: <br>
+            <input type="password" name="password" placeholder="Enter password"><br>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+
+    <script>
+        const form = document.querySelector(".form-box");
+        form.addEventListener('submit', async(event) => {
+            event.preventDefault();
+            const formdata = new FormData(form);
+            const data = Object.fromEntries(formdata);
+            console.log(data);
+            const req=await fetch('http://127.0.0.1:3000/api/v1/teachers/login', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+            if(req.status === 201) {
+                const islogged = true;
+                var obj = await req.json();
+                obj.islogged = islogged;
+                alert('Login Successful!');
+                localStorage.setItem('obj',JSON.stringify(obj));
+                window.location.href = '/frontend/teacher.html';
+                
+
+            }
+            else alert("Invalid Email or Password");
+        })  
+    </script>
+</body>
+</html>

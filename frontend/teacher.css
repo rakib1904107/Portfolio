@@ -1,0 +1,99 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-style: none;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+a,a:hover{
+    text-decoration: none;
+}
+.portfolio{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.profile_img{
+    width: 300px;
+    height: 400px;
+    background-color: aliceblue;
+    margin: 50px;
+    flex: none;
+    border-radius: 5px;
+}
+.profile_img img{
+  height: 370px;
+  width: 270px;
+  margin: 15px;
+  border-radius: 5px;
+}
+.details{
+    width: calc(100% - 100px);
+    height: 100%;
+    background-color: aliceblue;
+    text-align: justify;
+    border-radius: 5px;
+}
+.details h1, .details h3, .details p{
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.details h1{
+  margin-top: 15px;
+}
+.details p{
+  font-size: 20px;
+}
+.details h3{
+  font-size: 25px;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ccc; /* Border for the whole table */
+  }
+  
+  th, td {
+    border: 1px solid #ccc; /* Border for table cells */
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2; /* Optional background color for header cells */
+  }
+  .publication{
+    margin-top: 50px;
+    width: calc(100% - 100px);
+  }
+
+  button{
+    height: 40px;
+    width: 200px;
+    background-color: green;
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  button:hover{
+    transform: scale(1.1);
+  }
+  .flexButton{
+    display: flex;
+    justify-content: center;
+  }
+  .add-pub{
+    margin-bottom: 50px;
+  }
+
+  .update-info{
+    margin-top: 20px;
+  }
