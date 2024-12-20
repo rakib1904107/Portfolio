@@ -350,8 +350,8 @@ main {
 
 .avatar-box {
   /* background: var(--bg-gradient-onyx); */
-/*   border-radius: 20px; */
-overflow: hidden;
+  /*   border-radius: 20px; */
+  overflow: hidden;
 }
 
 .info-content .name {
@@ -1428,9 +1428,9 @@ textarea.form-input::-webkit-resizer {
     gap: 25px;
   }
 
-  .avatar-box {
+  /* .avatar-box {
     border-radius: 30px;
-  }
+  } */
 
   .avatar-box img {
     width: 120px;
