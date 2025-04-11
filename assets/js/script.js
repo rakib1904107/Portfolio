@@ -75,6 +75,25 @@ for (let i = 0; i < selectItems.length; i++) {
   });
 }
 
+const select2 = document.querySelector("[data-select2]");
+const selectItems2 = document.querySelectorAll("[data-select-item2]");
+const selectValue2 = document.querySelector("[data-selecct-value2]");
+const filterBtn2 = document.querySelectorAll("[data-filter-btn2]");
+
+select2.addEventListener("click", function () { elementToggleFunc(this); });
+
+// add event in all select items
+for (let i = 0; i < selectItems2.length; i++) {
+  selectItems2[i].addEventListener("click", function () {
+
+    let selectedValue2 = this.innerText.toLowerCase();
+    selectValue2.innerText = this.innerText;
+    elementToggleFunc(select);
+    filterFunc(selectedValue2);
+
+  });
+}
+
 // filter variables
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
